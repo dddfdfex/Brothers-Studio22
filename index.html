@@ -3751,6 +3751,140 @@
 }
 </style>
 
+<style id="mobile-final-fit">
+/* Mobile-only fit adjustments — desktop remains unchanged. */
+@media (max-width: 720px) {
+    .nav-inner {
+        min-height: 58px !important;
+        padding-inline: 14px !important;
+        gap: 10px !important;
+    }
+    .nav .brand {
+        min-width: 0 !important;
+        gap: 8px !important;
+        font-size: clamp(12px, 3.4vw, 15px) !important;
+    }
+    .nav .brand > span {
+        white-space: nowrap !important;
+    }
+    .nav .logo-circle {
+        width: 36px !important;
+        height: 36px !important;
+        flex: 0 0 36px !important;
+    }
+    .nav-burger {
+        width: 40px !important;
+        height: 40px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 40px !important;
+    }
+    .hero {
+        min-height: calc(100svh - 58px) !important;
+        min-height: calc(100dvh - 58px) !important;
+        padding-inline: 14px !important;
+        overflow: hidden !important;
+    }
+    .hero-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 28px 0 82px !important;
+        gap: 22px !important;
+    }
+    .hero-text {
+        width: 100% !important;
+        max-width: 620px !important;
+        margin-inline: auto !important;
+    }
+    .hero-text .eyebrow {
+        font-size: 11px !important;
+        line-height: 1.6 !important;
+    }
+    .hero-text h1 {
+        font-size: clamp(28px, 9vw, 40px) !important;
+        line-height: 1.35 !important;
+        margin-inline: auto !important;
+    }
+    .hero-text .tagline {
+        font-size: clamp(15px, 4.5vw, 19px) !important;
+        line-height: 1.7 !important;
+    }
+    .hero-text .lead,
+    .hero-text .hero-motiv {
+        font-size: clamp(13px, 3.8vw, 16px) !important;
+        line-height: 1.9 !important;
+        max-width: 100% !important;
+    }
+    .hero-actions {
+        width: 100% !important;
+        max-width: 520px !important;
+        margin-inline: auto !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+    }
+    .hero-actions .btn {
+        min-height: 46px !important;
+        padding: 11px 16px !important;
+        font-size: 12px !important;
+        flex: 1 1 170px !important;
+    }
+    .hero-portrait {
+        width: min(72vw, 280px) !important;
+        max-width: 280px !important;
+        margin-inline: auto !important;
+    }
+    .hero-portrait .portrait-frame {
+        width: 100% !important;
+    }
+    .hero-portrait .portrait-frame img {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: min(42vh, 300px) !important;
+        object-fit: contain !important;
+    }
+    .hero-portrait .floating-badge {
+        width: 38px !important;
+        height: 38px !important;
+    }
+    .hero-scroll-hint {
+        bottom: 10px !important;
+        font-size: 10px !important;
+    }
+    .wave-divider {
+        height: 58px !important;
+    }
+    .wave-layer svg {
+        height: 58px !important;
+    }
+    .section, .section-tight {
+        padding-inline: 14px !important;
+    }
+    .container {
+        width: min(100%, 94vw) !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .nav .brand > span {
+        font-size: 11px !important;
+    }
+    .hero-inner {
+        padding-top: 22px !important;
+    }
+    .hero-portrait {
+        width: min(68vw, 230px) !important;
+    }
+    .hero-text h1 {
+        font-size: 27px !important;
+    }
+    .hero-actions .btn {
+        flex-basis: 100% !important;
+    }
+}
+
+/* Music is automatic; there is no visible music button. */
+#audio-toggle, .foot-audio-btn { display: none !important; }
+</style>
 </head>
 <body>
 
@@ -4299,10 +4433,6 @@
             <p class="foot-desc foot-success">بالتوفيق والنجاح دائمًا</p>
             <div class="foot-divider"></div>
 
-            <button id="audio-toggle" class="foot-audio-btn" aria-label="تشغيل أو إيقاف الموسيقى">
-                <span id="audio-label">الموسيقى تعمل</span>
-            </button>
-
             <div class="foot-divider"></div>
             <nav class="foot-links" aria-label="روابط الموقع">
                 <a href="#hero">الرئيسية</a>
@@ -4438,122 +4568,50 @@
         // ============================================================
 
         // ============================================================
-        // AUDIO
+        // AUDIO — automatic playback only (no UI button)
         // ============================================================
         const bgAudio = document.getElementById("bg-audio");
-        const audioToggle = document.getElementById("audio-toggle");
-        const audioLabel = document.getElementById("audio-label");
-        const audioIcon = document.getElementById("audio-icon");
         let audioPlaying = false;
-        let userMuted = false;
-        let audioFadeInterval = null;
-
-        // Always start unmuted when the browser allows audible autoplay.
-        // Do not persist a previous mute choice because the requested behavior is automatic playback.
-        try { localStorage.removeItem("as26_audio_muted"); } catch (e) {}
-
-        function setAudioUI(playing) {
-            audioPlaying = playing;
-            audioToggle.classList.toggle("muted", !playing);
-            audioLabel.textContent = playing ? "الموسيقى تعمل" : "الموسيقى متوقفة";
-            // The footer intentionally uses a text-only audio control; no icon is required.
-            if (audioIcon) {
-                audioIcon.setAttribute("data-lucide", playing ? "volume-2" : "volume-x");
-                if (window.lucide) window.lucide.createIcons();
-            }
-            try {
-                localStorage.setItem("as26_audio_muted", playing ? "false" : "true");
-            } catch (e) {}
-        }
-
-        function fadeAudioIn() {
-            const audio = document.getElementById("bg-audio");
-            if (!audio) return;
-            audio.volume = 0;
-            const target = 0.55;
-            const steps = 40;
-            let step = 0;
-            if (audioFadeInterval) clearInterval(audioFadeInterval);
-            audioFadeInterval = setInterval(() => {
-                step++;
-                const progress = step / steps;
-                audio.volume = Math.min(progress * target, target);
-                if (step >= steps) {
-                    clearInterval(audioFadeInterval);
-                    audioFadeInterval = null;
-                }
-            }, 80);
-        }
 
         function startBackgroundMusic() {
             if (!bgAudio) return;
-            userMuted = false;
+            bgAudio.loop = true;
+            bgAudio.autoplay = true;
+            bgAudio.playsInline = true;
             bgAudio.volume = 0.55;
-            const playPromise = bgAudio.play();
-            if (playPromise && typeof playPromise.then === "function") {
-                playPromise.then(() => {
+
+            const attempt = bgAudio.play();
+            if (attempt && typeof attempt.catch === "function") {
+                attempt.then(() => {
                     audioPlaying = true;
-                    setAudioUI(true);
                 }).catch(() => {
-                    // Audible autoplay can be blocked by the browser.
-                    // firstInteraction below retries immediately after the first user action.
                     audioPlaying = false;
-                    setAudioUI(false);
                 });
             } else {
                 audioPlaying = true;
-                setAudioUI(true);
             }
         }
 
-        // Try immediately; this works automatically when the browser permits audible autoplay.
+        // Try immediately. If the browser blocks audible autoplay, retry on the
+        // first real interaction. There is intentionally no music control button.
         startBackgroundMusic();
 
-                audioToggle.addEventListener("click", () => {
-            if (!audioPlaying) {
-                userMuted = false;
-                bgAudio.play().then(() => {
-                    fadeAudioIn();
-                    setAudioUI(true);
-                }).catch(() => { showToast("تعذر تشغيل الموسيقى", "err"); });
-            } else {
-                bgAudio.pause();
-                if (audioFadeInterval) { clearInterval(audioFadeInterval);
-                    audioFadeInterval = null;
-                    bgAudio.volume = 0; }
-                userMuted = true;
-                setAudioUI(false);
-            }
-            if (typeof gsap !== "undefined") {
-                gsap.to(audioToggle, {
-                    scale: 0.94,
-                    duration: 0.12,
-                    ease: "power2.out",
-                    yoyo: true,
-                    repeat: 1
-                });
-            }
-        });
-
-        const firstInteraction = () => {
-            if (!audioPlaying) {
-                bgAudio.volume = 0.55;
-                bgAudio.play().then(() => {
+        const resumeMusicOnInteraction = () => {
+            if (!bgAudio || audioPlaying) return;
+            bgAudio.volume = 0.55;
+            const attempt = bgAudio.play();
+            if (attempt && typeof attempt.then === "function") {
+                attempt.then(() => {
                     audioPlaying = true;
-                    setAudioUI(true);
-                    document.removeEventListener("click", firstInteraction);
-                    document.removeEventListener("touchstart", firstInteraction);
-                    document.removeEventListener("keydown", firstInteraction);
+                    document.removeEventListener("pointerdown", resumeMusicOnInteraction);
+                    document.removeEventListener("keydown", resumeMusicOnInteraction);
+                    document.removeEventListener("touchstart", resumeMusicOnInteraction);
                 }).catch(() => {});
-            } else {
-                document.removeEventListener("click", firstInteraction);
-                document.removeEventListener("touchstart", firstInteraction);
-                document.removeEventListener("keydown", firstInteraction);
             }
         };
-        document.addEventListener("click", firstInteraction);
-        document.addEventListener("touchstart", firstInteraction);
-        document.addEventListener("keydown", firstInteraction);
+        document.addEventListener("pointerdown", resumeMusicOnInteraction, { passive: true });
+        document.addEventListener("keydown", resumeMusicOnInteraction, { passive: true });
+        document.addEventListener("touchstart", resumeMusicOnInteraction, { passive: true });
 
         // ============================================================
         // HERO INTRO
