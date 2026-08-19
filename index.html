@@ -944,6 +944,25 @@
             border-color: rgba(247, 245, 240, 0.35);
         }
 
+        /* Official results-inquiry CTA */
+        .btn-result {
+            background: rgba(201, 169, 110, 0.08);
+            color: var(--gold-300);
+            border: 1.5px solid rgba(201, 169, 110, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .btn-result i, .btn-result svg {
+            flex-shrink: 0;
+        }
+        .btn-result:hover {
+            background: rgba(201, 169, 110, 0.16);
+            border-color: rgba(201, 169, 110, 0.80);
+            color: var(--gold-200);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px -18px rgba(201, 169, 110, 0.55);
+        }
+
         /* Hero Portrait */
         .hero-portrait {
             position: relative;
@@ -2280,6 +2299,24 @@
             background: #fff;
         }
 
+        .upload-status {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            min-height: 16px;
+        }
+        .upload-status.uploading {
+            color: var(--petrol-700);
+        }
+        .upload-status.success {
+            color: var(--success);
+        }
+        .upload-status.error {
+            color: var(--danger);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
         .progress-bar {
             height: 4px;
             background: var(--line);
@@ -2422,26 +2459,108 @@
             box-shadow: 0 18px 44px -16px rgba(201, 169, 110, 0.60);
         }
         @media (max-width: 480px) {
+            .reg-shell {
+                border-radius: 20px;
+            }
             .reg-progress {
                 padding: 14px 16px;
                 gap: 4px;
             }
+            .reg-progress .step-dot {
+                height: 4px;
+            }
             .reg-header {
-                padding: 16px 18px 0;
+                padding: 16px 16px 0;
+            }
+            .reg-header .step-label {
+                font-size: 11.5px;
             }
             .reg-header h3 {
-                font-size: 20px;
+                font-size: 19px;
+            }
+            .autosave-indicator {
+                font-size: 11px;
             }
             .reg-body {
-                padding: 18px 16px 10px;
+                padding: 16px 14px 8px;
+                min-height: 0;
+            }
+            .field {
+                margin-bottom: 16px;
+            }
+            .field label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            .field .hint {
+                font-size: 11.5px;
+            }
+            .field input[type="text"],
+            .field input[type="tel"],
+            .field input[type="number"],
+            .field select,
+            .field textarea {
+                padding: 12px 14px;
+                font-size: 14px;
+                border-radius: 10px;
+            }
+            .choice-card {
+                padding: 14px 10px;
+            }
+            .choice-card h5 {
+                font-size: 13.5px;
+            }
+            .choice-card p {
+                font-size: 11.5px;
+            }
+            .upload-card {
+                padding: 20px 14px;
+            }
+            .upload-card .u-icon {
+                width: 44px;
+                height: 44px;
+            }
+            .consent-box {
+                padding: 14px 14px;
+                gap: 10px;
+            }
+            .consent-box .c-title {
+                font-size: 13.5px;
+            }
+            .consent-box .c-text {
+                font-size: 12px;
+            }
+            .review-block {
+                padding: 14px;
+            }
+            .review-row {
+                font-size: 12.5px;
             }
             .reg-footer {
-                padding: 16px 16px 20px;
+                padding: 14px 14px 18px;
                 flex-direction: column;
             }
             .reg-footer .btn-nav {
                 width: 100%;
                 justify-content: center;
+                padding: 13px 20px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 380px) {
+            .reg-header h3 {
+                font-size: 17px;
+            }
+            .reg-body {
+                padding: 14px 12px 6px;
+            }
+            .field input[type="text"],
+            .field input[type="tel"],
+            .field input[type="number"],
+            .field select,
+            .field textarea {
+                padding: 11px 12px;
+                font-size: 13.5px;
             }
         }
 
@@ -4159,6 +4278,7 @@
                 <div class="hero-actions" id="hero-actions">
                     <a href="#register" class="btn btn-gold magnetic"><i data-lucide="graduation-cap"></i> سجّل بياناتك الآن</a>
                     <a href="#message" class="btn btn-ghost magnetic"><i data-lucide="mail"></i> اقرأ رسالة أمنية</a>
+                    <a href="https://tansik.digital.gov.eg/application/" target="_blank" rel="noopener noreferrer" class="btn btn-result magnetic"><i data-lucide="search-check"></i> الاستعلام عن نتيجة المرحلة الثانية للتنسيق</a>
                 </div>
             </div>
 
@@ -4861,19 +4981,19 @@
         });
 
         const firstInteraction = () => {
-            if (!audioPlaying) {
+            // Remove immediately: this handler exists only to unlock the very first
+            // browser interaction. If left attached, it would fire on every click
+            // (including the footer mute button itself, via event bubbling) and
+            // silently restart the music right after the user paused it.
+            document.removeEventListener("click", firstInteraction);
+            document.removeEventListener("touchstart", firstInteraction);
+            document.removeEventListener("keydown", firstInteraction);
+            if (!audioPlaying && !userMuted) {
                 bgAudio.volume = 0.55;
                 bgAudio.play().then(() => {
                     audioPlaying = true;
                     setAudioUI(true);
-                    document.removeEventListener("click", firstInteraction);
-                    document.removeEventListener("touchstart", firstInteraction);
-                    document.removeEventListener("keydown", firstInteraction);
                 }).catch(() => {});
-            } else {
-                document.removeEventListener("click", firstInteraction);
-                document.removeEventListener("touchstart", firstInteraction);
-                document.removeEventListener("keydown", firstInteraction);
             }
         };
         document.addEventListener("click", firstInteraction);
@@ -5248,11 +5368,68 @@
         let balloonsSpawned = false;
 
         function spawnBalloons() {
-            if (balloonsSpawned || reduceMotion) return;
+            if (balloonsSpawned) return;
             balloonsSpawned = true;
             const container = document.getElementById("balloon-container");
-            const colors = ["#C9A96E", "#D8BE8C", "#B5D8E8", "#D4EAFA", "#FFFFFF", "rgba(255,255,255,0.25)"];
-            const count = 28;
+            if (!container) return;
+
+            if (reduceMotion) {
+                // Static, motion-free celebration for reduced-motion users
+                const staticColors = ["#C9A96E", "#D8BE8C", "#B5D8E8", "#E3CEA8", "#FFFFFF"];
+                for (let i = 0; i < 14; i++) {
+                    const b = document.createElement("div");
+                    b.className = "balloon";
+                    const size = 40 + Math.random() * 70;
+                    b.style.width = size + "px";
+                    b.style.height = (size * 1.15) + "px";
+                    b.style.left = (5 + Math.random() * 90) + "%";
+                    b.style.bottom = (5 + Math.random() * 70) + "%";
+                    b.style.background = staticColors[Math.floor(Math.random() * staticColors.length)];
+                    b.style.boxShadow = "0 8px 30px rgba(0,0,0,0.06), inset 0 -8px 20px rgba(0,0,0,0.04)";
+                    b.style.opacity = "0.8";
+                    const hl = document.createElement("div");
+                    hl.className = "highlight";
+                    b.appendChild(hl);
+                    container.appendChild(b);
+                }
+                return;
+            }
+
+            // A handful of drifting confetti/sparkles for extra festivity
+            const confettiEmoji = ["🎉", "✨", "🎊", "⭐"];
+            for (let i = 0; i < 18; i++) {
+                const c = document.createElement("span");
+                c.textContent = confettiEmoji[Math.floor(Math.random() * confettiEmoji.length)];
+                const csize = 14 + Math.random() * 14;
+                const cleft = Math.random() * 100;
+                const cdelay = Math.random() * 6;
+                const cduration = 10 + Math.random() * 10;
+                c.style.cssText = `position:absolute;left:${cleft}%;bottom:-40px;font-size:${csize}px;opacity:0;pointer-events:none;`;
+                container.appendChild(c);
+                const cStartY = 100 + Math.random() * 20;
+                const cEndY = -20 - Math.random() * 90;
+                gsap.set(c, { y: cStartY + "%", opacity: 0, rotate: 0 });
+                gsap.to(c, {
+                    y: cEndY + "%",
+                    x: (Math.random() - 0.5) * 60,
+                    rotate: (Math.random() - 0.5) * 200,
+                    opacity: 0.75,
+                    duration: cduration,
+                    delay: cdelay,
+                    ease: "sine.inOut",
+                    repeat: -1,
+                    yoyo: true,
+                    modifiers: {
+                        y: (val) => {
+                            const v = parseFloat(val);
+                            if (v < -120) return "110%";
+                            return val;
+                        }
+                    }
+                });
+            }
+            const colors = ["#C9A96E", "#D8BE8C", "#B5D8E8", "#D4EAFA", "#FFFFFF", "rgba(255,255,255,0.25)", "#E3CEA8", "#9FCBDA"];
+            const count = 46;
             for (let i = 0; i < count; i++) {
                 const b = document.createElement("div");
                 b.className = "balloon";
@@ -5544,6 +5721,11 @@
             }
         });
 
+        // Tracks live upload state per field so the submit handler can tell
+        // "still uploading" apart from "failed" apart from "never started",
+        // and so a failed upload can be retried instead of silently dropped.
+        const uploadState = {};
+
         function buildUploader(containerId, key, accept, maxSizeMB) {
             const container = document.getElementById(containerId);
             container.innerHTML = `
@@ -5556,8 +5738,6 @@
             </div>`;
             const card = container.querySelector(".upload-card");
             const input = container.querySelector("input[type=file]");
-            const progressWrap = container.querySelector(".progress-bar");
-            const progressBar = progressWrap.querySelector("span");
 
             card.addEventListener("click", () => input.click());
             card.addEventListener("keydown", (e) => { if (e.key === "Enter") input.click(); });
@@ -5576,6 +5756,8 @@
             input.addEventListener("change", (e) => {
                 const f = e.target.files[0];
                 if (f) handleFile(f);
+                // Reset so picking the exact same file again still fires "change".
+                input.value = "";
             });
 
             function handleFile(file) {
@@ -5593,10 +5775,9 @@
                     return;
                 }
                 formState.files[key] = file;
+                formState.fileUrls[key] = "";
                 renderPreview(file, isImage);
-                const freshWrap = container.querySelector(".progress-bar");
-                const freshBar = freshWrap ? freshWrap.querySelector("span") : null;
-                uploadToFirebase(file, key, freshWrap, freshBar);
+                uploadToFirebase(file, key);
                 if (typeof gsap !== "undefined") {
                     gsap.to(card, { scale: 1.04, duration: 0.15, ease: "back.out(2)", yoyo: true, repeat: 1 });
                 }
@@ -5613,6 +5794,7 @@
                     <button type="button" class="remove-btn">حذف</button>
                   </div>
                 </div>
+                <div class="upload-status"></div>
                 <div class="progress-bar"><span></span></div>`;
                 } else {
                     container.innerHTML = `
@@ -5622,12 +5804,14 @@
                     <button type="button" class="remove-btn" style="background:var(--off-white);border:1px solid var(--line);">حذف</button>
                   </div>
                 </div>
+                <div class="upload-status"></div>
                 <div class="progress-bar"><span></span></div>`;
                     if (window.lucide) window.lucide.createIcons();
                 }
                 container.querySelector(".remove-btn").addEventListener("click", () => {
                     formState.files[key] = null;
                     formState.fileUrls[key] = "";
+                    delete uploadState[key];
                     buildUploader(containerId, key, accept, maxSizeMB);
                 });
                 const changeBtn = container.querySelector(".change-btn");
@@ -5637,22 +5821,53 @@
                 });
             }
 
-            function uploadToFirebase(file, key, pWrap, pBar) {
-                if (!storage) { showToast("تعذر الاتصال بالتخزين — سيتم إعادة المحاولة عند الإرسال", "err"); return; }
+            function setStatus(text, kind) {
+                const statusEl = container.querySelector(".upload-status");
+                if (!statusEl) return;
+                statusEl.textContent = text || "";
+                statusEl.className = "upload-status" + (kind ? " " + kind : "");
+            }
+
+            function uploadToFirebase(file, uKey) {
+                if (!storage) {
+                    uploadState[uKey] = "error";
+                    setStatus("تعذر الاتصال بالتخزين — سيُعاد المحاولة تلقائيًا عند الإرسال", "error");
+                    return;
+                }
+                uploadState[uKey] = "uploading";
+                const pWrap = container.querySelector(".progress-bar");
+                const pBar = pWrap ? pWrap.querySelector("span") : null;
                 if (pWrap) pWrap.style.display = "block";
-                const path = `students_uploads/${Date.now()}_${key}_${file.name}`;
+                if (pBar) pBar.style.width = "0%";
+                setStatus("جاري الرفع… 0%", "uploading");
+                const path = `students_uploads/${Date.now()}_${uKey}_${file.name}`;
                 const sRef = storageRef(storage, path);
                 const task = uploadBytesResumable(sRef, file);
                 task.on("state_changed", (snap) => {
-                    const pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+                    const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
                     if (pBar) pBar.style.width = pct + "%";
+                    setStatus(`جاري الرفع… ${pct}%`, "uploading");
                 }, (err) => {
-                    showToast("فشل رفع الملف: " + err.message, "err");
-                    console.error("Upload failed for", key, err);
+                    console.error("Upload failed for", uKey, err);
+                    uploadState[uKey] = "error";
+                    // Only re-render a retry affordance if this uploader instance is still on screen
+                    // (the user may have removed/changed the file while the upload was in flight).
+                    if (formState.files[uKey] === file) {
+                        setStatus("فشل رفع الملف — اضغط لإعادة المحاولة", "error");
+                        const statusEl = container.querySelector(".upload-status");
+                        if (statusEl) {
+                            statusEl.style.cursor = "pointer";
+                            statusEl.addEventListener("click", () => uploadToFirebase(file, uKey), { once: true });
+                        }
+                        showToast("فشل رفع الملف، يمكنك إعادة المحاولة", "err");
+                    }
                 }, async () => {
                     const url = await getDownloadURL(task.snapshot.ref);
-                    formState.fileUrls[key] = url;
+                    if (formState.files[uKey] !== file) return; // superseded by a newer selection
+                    formState.fileUrls[uKey] = url;
+                    uploadState[uKey] = "done";
                     if (pBar) pBar.style.width = "100%";
+                    setStatus("تم الرفع بنجاح ✅", "success");
                     showToast("تم رفع الملف بنجاح", "ok");
                     if (typeof gsap !== "undefined") {
                         gsap.to(container, { scale: 1.02, duration: 0.2, ease: "back.out(2)", yoyo: true,
@@ -5660,6 +5875,13 @@
                     }
                 });
             }
+
+            container._retryUpload = () => {
+                const f = formState.files[key];
+                if (f && uploadState[key] !== "uploading" && uploadState[key] !== "done") {
+                    uploadToFirebase(f, key);
+                }
+            };
         }
         buildUploader("upload-result", "resultImage", "image/*", 8);
         buildUploader("upload-personal", "personalImage", "image/*", 8);
@@ -5814,20 +6036,42 @@
             submitBtn.textContent = "جاري التأكد من رفع الملفات...";
 
             try {
+                // Kick a retry for anything that failed or never started (e.g. the
+                // storage connection dropped mid-flow), then wait for everything in flight.
+                ["resultImage", "personalImage", "audio", "memoryImage"].forEach((k) => {
+                    if (!formState.fileUrls[k] && formState.files[k] && uploadState[k] !== "uploading") {
+                        const el = document.getElementById(
+                            k === "resultImage" ? "upload-result" :
+                            k === "personalImage" ? "upload-personal" :
+                            k === "audio" ? "upload-audio" : "upload-memory"
+                        );
+                        if (el && el._retryUpload) el._retryUpload();
+                    }
+                });
+
                 const pending = [];
                 if (!formState.fileUrls.resultImage && formState.files.resultImage) {
-                    pending.push(waitForUpload(() => formState.fileUrls.resultImage, 20000));
+                    pending.push(waitForUpload(() => formState.fileUrls.resultImage, 25000));
                 }
                 if (!formState.fileUrls.personalImage && formState.files.personalImage) {
-                    pending.push(waitForUpload(() => formState.fileUrls.personalImage, 20000));
+                    pending.push(waitForUpload(() => formState.fileUrls.personalImage, 25000));
                 }
                 if (!formState.fileUrls.audio && formState.files.audio) {
-                    pending.push(waitForUpload(() => formState.fileUrls.audio, 12000));
+                    pending.push(waitForUpload(() => formState.fileUrls.audio, 15000));
                 }
                 if (!formState.fileUrls.memoryImage && formState.files.memoryImage) {
-                    pending.push(waitForUpload(() => formState.fileUrls.memoryImage, 12000));
+                    pending.push(waitForUpload(() => formState.fileUrls.memoryImage, 15000));
                 }
                 if (pending.length) await Promise.all(pending);
+
+                // Required images must have a real URL by now — if not, stop and let the
+                // person retry rather than silently submitting the registration without them.
+                if (formState.files.resultImage && !formState.fileUrls.resultImage) {
+                    throw new Error("MISSING_RESULT_IMAGE");
+                }
+                if (formState.files.personalImage && !formState.fileUrls.personalImage) {
+                    throw new Error("MISSING_PERSONAL_IMAGE");
+                }
 
                 submitBtn.textContent = "جاري حفظ بياناتك...";
 
@@ -5871,7 +6115,15 @@
                 showSuccess(registrationId);
             } catch (err) {
                 console.error(err);
-                showToast("حدث خطأ أثناء إرسال التسجيل، يرجى المحاولة مرة أخرى", "err");
+                if (err && err.message === "MISSING_RESULT_IMAGE") {
+                    showToast("لم يكتمل رفع صورة النتيجة — يرجى إعادة المحاولة قبل التأكيد", "err");
+                    goToStep(4);
+                } else if (err && err.message === "MISSING_PERSONAL_IMAGE") {
+                    showToast("لم يكتمل رفع الصورة الشخصية — يرجى إعادة المحاولة قبل التأكيد", "err");
+                    goToStep(4);
+                } else {
+                    showToast("حدث خطأ أثناء إرسال التسجيل، يرجى المحاولة مرة أخرى", "err");
+                }
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = "تأكيد التسجيل";
