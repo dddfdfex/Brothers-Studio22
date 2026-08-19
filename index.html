@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#26343A" />
+    <link rel="preload" as="image" href="omnia.png" fetchpriority="high" />
     <title>أبطال الثانوية العامة 2026 — الأستاذة أمنية سعيد</title>
     <meta name="description" content="منصة تسجيل وتكريم أبطال الثانوية العامة 2026 مع الأستاذة أمنية سعيد — تجربة رقمية سينمائية فاخرة" />
 
@@ -3552,6 +3554,329 @@
             }
         }
 
+
+        /* ============================================================
+           MOBILE-FIRST FINAL TUNING
+           Optimized specifically for phone screens (<=600px).
+           Keeps the desktop design untouched.
+           ============================================================ */
+        @media (max-width: 600px) {
+            html {
+                scroll-behavior: auto;
+                overflow-x: hidden;
+            }
+
+            body {
+                width: 100%;
+                min-width: 0;
+                overflow-x: hidden;
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .container {
+                width: calc(100% - 28px) !important;
+                max-width: 100% !important;
+            }
+
+            /* Compact phone header */
+            .nav {
+                height: 62px;
+                padding: 7px 0 !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            .nav-inner {
+                min-height: 48px !important;
+                gap: 8px;
+                width: calc(100% - 24px) !important;
+            }
+            .nav .brand {
+                gap: 8px;
+                min-width: 0;
+            }
+            .nav .brand .logo-circle {
+                width: 34px;
+                height: 34px;
+            }
+            .nav .brand span {
+                font-size: 11.5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 190px;
+            }
+            .nav-burger {
+                width: 38px;
+                height: 38px;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .nav-burger svg {
+                width: 21px;
+                height: 21px;
+            }
+            .nav-cta#nav-cta-desktop {
+                display: none !important;
+            }
+            .nav-links {
+                width: min(300px, 86vw) !important;
+                max-width: 86vw !important;
+                padding: 76px 16px 24px !important;
+                gap: 2px !important;
+            }
+            .nav-links li a {
+                padding: 12px 14px !important;
+                font-size: 14px !important;
+            }
+
+            /* Phone hero: compact, immediate, and above-the-fold */
+            .hero {
+                min-height: auto !important;
+                padding: 76px 0 58px !important;
+                align-items: flex-start;
+                isolation: isolate;
+            }
+            .hero-inner {
+                width: calc(100% - 28px) !important;
+                grid-template-columns: 1fr !important;
+                gap: 18px !important;
+                padding: 18px 0 28px !important;
+                text-align: center;
+            }
+            .hero-text {
+                order: 1;
+                width: 100%;
+            }
+            .hero-portrait {
+                order: 2 !important;
+                margin: 0 auto !important;
+                width: 170px;
+                max-width: 46vw;
+            }
+            .hero-portrait .portrait-frame {
+                border-radius: 20px;
+            }
+            .hero-portrait .portrait-frame img {
+                width: 100%;
+                max-height: 190px !important;
+                object-fit: contain;
+            }
+            .hero-portrait .portrait-glow {
+                width: 170px !important;
+                height: 170px !important;
+                filter: blur(35px) !important;
+                opacity: .35;
+            }
+            .hero-portrait .floating-badge {
+                width: 34px !important;
+                height: 34px !important;
+                min-width: 34px;
+            }
+            .hero-portrait .floating-badge svg {
+                width: 16px !important;
+                height: 16px !important;
+            }
+            .hero-portrait .fb-1 { left: -10px !important; }
+            .hero-portrait .fb-2 { right: -10px !important; }
+
+            .hero-text .eyebrow {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                font-size: 11px !important;
+                margin-bottom: 10px !important;
+                gap: 7px;
+            }
+            .hero-text .eyebrow::before {
+                width: 20px;
+            }
+            .hero-text h1 {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                font-size: clamp(27px, 8.3vw, 34px) !important;
+                line-height: 1.25 !important;
+                letter-spacing: -.4px;
+            }
+            .hero-text .tagline {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                font-size: 16px !important;
+                margin-top: 9px !important;
+            }
+            .hero-text .lead {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                max-width: 340px !important;
+                margin: 10px auto 0 !important;
+                font-size: 13.5px !important;
+                line-height: 1.85 !important;
+                color: rgba(247,245,240,.82) !important;
+            }
+            .hero-text .hero-motiv {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                display: block !important;
+                margin-top: 12px !important;
+                font-size: 12px !important;
+                line-height: 1.7 !important;
+            }
+            .hero-actions {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                width: 100%;
+                display: grid !important;
+                grid-template-columns: 1fr;
+                gap: 9px !important;
+                margin-top: 17px !important;
+            }
+            .hero-actions .btn {
+                width: 100%;
+                min-height: 46px;
+                padding: 11px 16px !important;
+                font-size: 13px !important;
+                border-radius: 13px;
+                justify-content: center;
+            }
+            .hero-actions .btn svg {
+                width: 17px;
+                height: 17px;
+            }
+
+            /* Reduce expensive visual work on mobile */
+            .hero .hero-grain {
+                display: none !important;
+            }
+            .hero .hero-bg .bg-orb {
+                filter: blur(55px) !important;
+                animation: none !important;
+            }
+            .hero .hero-bg .bg-orb-1 {
+                width: 280px !important;
+                height: 280px !important;
+                top: -100px !important;
+                right: -100px !important;
+            }
+            .hero .hero-bg .bg-orb-2 {
+                width: 220px !important;
+                height: 220px !important;
+                bottom: -80px !important;
+                left: -80px !important;
+            }
+            .hero .hero-vignette {
+                background: radial-gradient(ellipse at center, transparent 35%, rgba(15,28,36,.34) 100%) !important;
+            }
+            .hero-scroll-hint {
+                display: none !important;
+            }
+            .wave-divider {
+                height: 52px !important;
+            }
+            .wave-divider .wave-layer {
+                width: 200%;
+                animation: none !important;
+                transform: translate3d(0,0,0) !important;
+            }
+
+            /* Don't render large below-fold sections until they are needed. */
+            main > section:not(#hero) {
+                content-visibility: auto;
+                contain-intrinsic-size: 700px;
+            }
+
+            /* Registration cards/inputs stay inside the viewport. */
+            .section {
+                padding: 52px 0 !important;
+            }
+            .section-tight {
+                padding: 42px 0 !important;
+            }
+            .section-head h2 {
+                font-size: 24px !important;
+                line-height: 1.35 !important;
+            }
+            .section-head p {
+                font-size: 13px !important;
+                line-height: 1.8 !important;
+            }
+            .choice-cards,
+            .choice-cards-3,
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            .choice-card,
+            .stat-card {
+                min-width: 0 !important;
+            }
+
+            /* Footer is compact on phone. */
+            footer.site-footer,
+            footer {
+                padding: 34px 0 24px !important;
+            }
+            footer .container {
+                width: calc(100% - 28px) !important;
+                display: block !important;
+                text-align: center;
+            }
+            footer h3 {
+                font-size: 18px !important;
+            }
+            footer .foot-desc,
+            footer .foot-tagline,
+            footer .credit,
+            footer .foot-links a {
+                font-size: 12.5px !important;
+                line-height: 1.8 !important;
+            }
+            footer .foot-links,
+            footer .foot-social {
+                justify-content: center !important;
+            }
+            footer .foot-audio-btn {
+                display: none !important;
+            }
+
+            /* Disable decorative continuous animations on phones. */
+            .hero-portrait .portrait-glow,
+            .hero-portrait .floating-badge,
+            .hero .hero-bg .bg-orb,
+            .atmosphere .orb,
+            .node-ripple,
+            .audio-pulse {
+                animation: none !important;
+            }
+
+            /* Prevent accidental horizontal overflow from wide decorative elements. */
+            .message-grid,
+            .timeline,
+            .reg-card,
+            .message-section,
+            .quote-strip,
+            .journey-section {
+                max-width: 100%;
+                overflow-x: clip;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .nav .brand span { max-width: 160px; font-size: 10.5px; }
+            .hero { padding-top: 72px !important; }
+            .hero-inner { gap: 14px !important; }
+            .hero-portrait { width: 145px; }
+            .hero-portrait .portrait-frame img { max-height: 165px !important; }
+            .hero-text h1 { font-size: 26px !important; }
+            .hero-text .lead { font-size: 12.8px !important; }
+        }
+
     </style>
 
     <style>
@@ -3751,140 +4076,6 @@
 }
 </style>
 
-<style id="mobile-final-fit">
-/* Mobile-only fit adjustments — desktop remains unchanged. */
-@media (max-width: 720px) {
-    .nav-inner {
-        min-height: 58px !important;
-        padding-inline: 14px !important;
-        gap: 10px !important;
-    }
-    .nav .brand {
-        min-width: 0 !important;
-        gap: 8px !important;
-        font-size: clamp(12px, 3.4vw, 15px) !important;
-    }
-    .nav .brand > span {
-        white-space: nowrap !important;
-    }
-    .nav .logo-circle {
-        width: 36px !important;
-        height: 36px !important;
-        flex: 0 0 36px !important;
-    }
-    .nav-burger {
-        width: 40px !important;
-        height: 40px !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex: 0 0 40px !important;
-    }
-    .hero {
-        min-height: calc(100svh - 58px) !important;
-        min-height: calc(100dvh - 58px) !important;
-        padding-inline: 14px !important;
-        overflow: hidden !important;
-    }
-    .hero-inner {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 28px 0 82px !important;
-        gap: 22px !important;
-    }
-    .hero-text {
-        width: 100% !important;
-        max-width: 620px !important;
-        margin-inline: auto !important;
-    }
-    .hero-text .eyebrow {
-        font-size: 11px !important;
-        line-height: 1.6 !important;
-    }
-    .hero-text h1 {
-        font-size: clamp(28px, 9vw, 40px) !important;
-        line-height: 1.35 !important;
-        margin-inline: auto !important;
-    }
-    .hero-text .tagline {
-        font-size: clamp(15px, 4.5vw, 19px) !important;
-        line-height: 1.7 !important;
-    }
-    .hero-text .lead,
-    .hero-text .hero-motiv {
-        font-size: clamp(13px, 3.8vw, 16px) !important;
-        line-height: 1.9 !important;
-        max-width: 100% !important;
-    }
-    .hero-actions {
-        width: 100% !important;
-        max-width: 520px !important;
-        margin-inline: auto !important;
-        gap: 10px !important;
-        flex-wrap: wrap !important;
-    }
-    .hero-actions .btn {
-        min-height: 46px !important;
-        padding: 11px 16px !important;
-        font-size: 12px !important;
-        flex: 1 1 170px !important;
-    }
-    .hero-portrait {
-        width: min(72vw, 280px) !important;
-        max-width: 280px !important;
-        margin-inline: auto !important;
-    }
-    .hero-portrait .portrait-frame {
-        width: 100% !important;
-    }
-    .hero-portrait .portrait-frame img {
-        width: 100% !important;
-        max-width: 100% !important;
-        max-height: min(42vh, 300px) !important;
-        object-fit: contain !important;
-    }
-    .hero-portrait .floating-badge {
-        width: 38px !important;
-        height: 38px !important;
-    }
-    .hero-scroll-hint {
-        bottom: 10px !important;
-        font-size: 10px !important;
-    }
-    .wave-divider {
-        height: 58px !important;
-    }
-    .wave-layer svg {
-        height: 58px !important;
-    }
-    .section, .section-tight {
-        padding-inline: 14px !important;
-    }
-    .container {
-        width: min(100%, 94vw) !important;
-    }
-}
-
-@media (max-width: 380px) {
-    .nav .brand > span {
-        font-size: 11px !important;
-    }
-    .hero-inner {
-        padding-top: 22px !important;
-    }
-    .hero-portrait {
-        width: min(68vw, 230px) !important;
-    }
-    .hero-text h1 {
-        font-size: 27px !important;
-    }
-    .hero-actions .btn {
-        flex-basis: 100% !important;
-    }
-}
-
-/* Music is automatic; there is no visible music button. */
-#audio-toggle, .foot-audio-btn { display: none !important; }
-</style>
 </head>
 <body>
 
@@ -3927,7 +4118,7 @@
         <div class="container nav-inner">
             <div class="brand">
                 <div class="logo-circle">
-                    <img src="logo.png" alt="شعار الأستاذة أمنية سعيد" onerror="this.parentElement.innerHTML='<span style=\'color:#C9A96E;font-weight:900;font-family:Alexandria;font-size:14px\'>أس</span>'" />
+                    <img src="logo.png" loading="eager" decoding="async" alt="شعار الأستاذة أمنية سعيد" onerror="this.parentElement.innerHTML='<span style=\'color:#C9A96E;font-weight:900;font-family:Alexandria;font-size:14px\'>أس</span>'" />
                 </div>
                 <span>أبطال الثانوية العامة <span class="gold">2026</span></span>
             </div>
@@ -3976,7 +4167,7 @@
                 <div class="portrait-frame">
                     <div class="rim-light"></div>
                     <div class="light-sweep"></div>
-                    <img src="omnia.png" alt="الأستاذة أمنية سعيد" id="omnia-hero-img" onerror="this.style.display='none'; document.getElementById('omnia-fallback').style.display='flex';" />
+                    <img src="omnia.png" loading="eager" decoding="async" fetchpriority="high" alt="الأستاذة أمنية سعيد" id="omnia-hero-img" onerror="this.style.display='none'; document.getElementById('omnia-fallback').style.display='flex';" />
                     <div class="fallback" id="omnia-fallback" style="display:none;">
                         <i data-lucide="user-round" style="width:56px;height:56px;"></i>
                     </div>
@@ -4433,6 +4624,10 @@
             <p class="foot-desc foot-success">بالتوفيق والنجاح دائمًا</p>
             <div class="foot-divider"></div>
 
+            <button id="audio-toggle" class="foot-audio-btn" aria-label="تشغيل أو إيقاف الموسيقى">
+                <span id="audio-label">الموسيقى تعمل</span>
+            </button>
+
             <div class="foot-divider"></div>
             <nav class="foot-links" aria-label="روابط الموقع">
                 <a href="#hero">الرئيسية</a>
@@ -4568,50 +4763,122 @@
         // ============================================================
 
         // ============================================================
-        // AUDIO — automatic playback only (no UI button)
+        // AUDIO
         // ============================================================
         const bgAudio = document.getElementById("bg-audio");
+        const audioToggle = document.getElementById("audio-toggle");
+        const audioLabel = document.getElementById("audio-label");
+        const audioIcon = document.getElementById("audio-icon");
         let audioPlaying = false;
+        let userMuted = false;
+        let audioFadeInterval = null;
+
+        // Always start unmuted when the browser allows audible autoplay.
+        // Do not persist a previous mute choice because the requested behavior is automatic playback.
+        try { localStorage.removeItem("as26_audio_muted"); } catch (e) {}
+
+        function setAudioUI(playing) {
+            audioPlaying = playing;
+            if (audioToggle) audioToggle.classList.toggle("muted", !playing);
+            if (audioLabel) audioLabel.textContent = playing ? "الموسيقى تعمل" : "الموسيقى متوقفة";
+            // The footer intentionally uses a text-only audio control; no icon is required.
+            if (audioIcon) {
+                audioIcon.setAttribute("data-lucide", playing ? "volume-2" : "volume-x");
+                if (window.lucide) window.lucide.createIcons();
+            }
+            try {
+                localStorage.setItem("as26_audio_muted", playing ? "false" : "true");
+            } catch (e) {}
+        }
+
+        function fadeAudioIn() {
+            const audio = document.getElementById("bg-audio");
+            if (!audio) return;
+            audio.volume = 0;
+            const target = 0.55;
+            const steps = 40;
+            let step = 0;
+            if (audioFadeInterval) clearInterval(audioFadeInterval);
+            audioFadeInterval = setInterval(() => {
+                step++;
+                const progress = step / steps;
+                audio.volume = Math.min(progress * target, target);
+                if (step >= steps) {
+                    clearInterval(audioFadeInterval);
+                    audioFadeInterval = null;
+                }
+            }, 80);
+        }
 
         function startBackgroundMusic() {
             if (!bgAudio) return;
-            bgAudio.loop = true;
-            bgAudio.autoplay = true;
-            bgAudio.playsInline = true;
+            userMuted = false;
             bgAudio.volume = 0.55;
-
-            const attempt = bgAudio.play();
-            if (attempt && typeof attempt.catch === "function") {
-                attempt.then(() => {
+            const playPromise = bgAudio.play();
+            if (playPromise && typeof playPromise.then === "function") {
+                playPromise.then(() => {
                     audioPlaying = true;
+                    setAudioUI(true);
                 }).catch(() => {
+                    // Audible autoplay can be blocked by the browser.
+                    // firstInteraction below retries immediately after the first user action.
                     audioPlaying = false;
+                    setAudioUI(false);
                 });
             } else {
                 audioPlaying = true;
+                setAudioUI(true);
             }
         }
 
-        // Try immediately. If the browser blocks audible autoplay, retry on the
-        // first real interaction. There is intentionally no music control button.
+        // Try immediately; this works automatically when the browser permits audible autoplay.
         startBackgroundMusic();
 
-        const resumeMusicOnInteraction = () => {
-            if (!bgAudio || audioPlaying) return;
-            bgAudio.volume = 0.55;
-            const attempt = bgAudio.play();
-            if (attempt && typeof attempt.then === "function") {
-                attempt.then(() => {
+        if (audioToggle) audioToggle.addEventListener("click", () => {
+            if (!audioPlaying) {
+                userMuted = false;
+                bgAudio.play().then(() => {
+                    fadeAudioIn();
+                    setAudioUI(true);
+                }).catch(() => { showToast("تعذر تشغيل الموسيقى", "err"); });
+            } else {
+                bgAudio.pause();
+                if (audioFadeInterval) { clearInterval(audioFadeInterval);
+                    audioFadeInterval = null;
+                    bgAudio.volume = 0; }
+                userMuted = true;
+                setAudioUI(false);
+            }
+            if (typeof gsap !== "undefined") {
+                gsap.to(audioToggle, {
+                    scale: 0.94,
+                    duration: 0.12,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1
+                });
+            }
+        });
+
+        const firstInteraction = () => {
+            if (!audioPlaying) {
+                bgAudio.volume = 0.55;
+                bgAudio.play().then(() => {
                     audioPlaying = true;
-                    document.removeEventListener("pointerdown", resumeMusicOnInteraction);
-                    document.removeEventListener("keydown", resumeMusicOnInteraction);
-                    document.removeEventListener("touchstart", resumeMusicOnInteraction);
+                    setAudioUI(true);
+                    document.removeEventListener("click", firstInteraction);
+                    document.removeEventListener("touchstart", firstInteraction);
+                    document.removeEventListener("keydown", firstInteraction);
                 }).catch(() => {});
+            } else {
+                document.removeEventListener("click", firstInteraction);
+                document.removeEventListener("touchstart", firstInteraction);
+                document.removeEventListener("keydown", firstInteraction);
             }
         };
-        document.addEventListener("pointerdown", resumeMusicOnInteraction, { passive: true });
-        document.addEventListener("keydown", resumeMusicOnInteraction, { passive: true });
-        document.addEventListener("touchstart", resumeMusicOnInteraction, { passive: true });
+        document.addEventListener("click", firstInteraction);
+        document.addEventListener("touchstart", firstInteraction);
+        document.addEventListener("keydown", firstInteraction);
 
         // ============================================================
         // HERO INTRO
